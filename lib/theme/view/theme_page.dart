@@ -12,7 +12,7 @@ class ThemePage extends StatelessWidget {
         return MaterialApp(
           theme: theme,
           debugShowCheckedModeBanner: false,
-          home: const ThemView(),
+          home: ThemView(),
         );
       },
     );

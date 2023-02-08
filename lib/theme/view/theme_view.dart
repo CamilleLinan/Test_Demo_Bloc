@@ -19,12 +19,12 @@ class ThemView extends StatelessWidget {
     {
       'title': 'Rose clair',
       'color': Colors.pink,
-      'brightness': Brightness.dark,
+      'brightness': Brightness.light,
     },
     {
       'title': 'Rose sombre',
       'color': Colors.pink,
-      'brightness': Brightness.light,
+      'brightness': Brightness.dark,
     },
     {
       'title': 'Rouge clair',
@@ -67,6 +67,16 @@ class ThemView extends StatelessWidget {
       'brightness': Brightness.dark,
     },
     {
+      'title': 'Turquoise clair',
+      'color': Colors.teal,
+      'brightness': Brightness.light,
+    },
+    {
+      'title': 'Turquoise sombre',
+      'color': Colors.teal,
+      'brightness': Brightness.dark,
+    },
+    {
       'title': 'Cyan clair',
       'color': Colors.cyan,
       'brightness': Brightness.light,
@@ -102,6 +112,55 @@ class ThemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Bloc Theme')),
+      body: GridView.builder(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          itemCount: themeList.length,
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 200,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            childAspectRatio: 2,
+          ),
+          itemBuilder: (context, index) {
+            return Card(
+              color: themeList[index]['color'],
+              child: InkWell(
+                onTap: () {
+                  context.read<ThemeCubit>().changeTheme(
+                      themeList[index]['color'],
+                      themeList[index]['brightness']);
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: Container()),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(themeList[index]['title']),
+                    ),
+                    const SizedBox(height: 7),
+                    Container(
+                      height: 25,
+                      color: themeList[index]['brightness'] == Brightness.light
+                          ? Colors.white54
+                          : Colors.black54,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const DemoPage()));
+        },
+        child: const Icon(
+          Icons.open_in_new,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }
